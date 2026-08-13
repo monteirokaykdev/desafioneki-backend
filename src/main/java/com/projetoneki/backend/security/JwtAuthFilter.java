@@ -19,12 +19,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import io.jsonwebtoken.JwtException;
 import lombok.RequiredArgsConstructor;
 
-/**
- * Intercepta as requisições, extrai o token JWT (do cookie HttpOnly "token",
- * com fallback pro header Authorization: Bearer — usado pelo Swagger, que
- * não consegue mandar cookie automaticamente) e autentica o admin no
- * contexto do Spring Security.
- */
 @Component
 @RequiredArgsConstructor
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -41,7 +35,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         String token = extractTokenFromCookie(request);
 
-        //Swagger Fallback
+        //Swagger Fallback e Mobile
         if (token == null) {
             token = extractTokenFromHeader(request);
         }

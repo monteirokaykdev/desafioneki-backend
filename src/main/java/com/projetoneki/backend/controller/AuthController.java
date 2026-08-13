@@ -17,6 +17,7 @@ import com.projetoneki.backend.dto.Request.ForgotPasswordRequest;
 import com.projetoneki.backend.dto.Request.LoginRequest;
 import com.projetoneki.backend.dto.Request.ResetPasswordRequest;
 import com.projetoneki.backend.dto.Response.LoginResponse;
+import com.projetoneki.backend.dto.Response.LoginResponseMobile;
 import com.projetoneki.backend.security.JwtUtil;
 import com.projetoneki.backend.services.AuthService;
 import com.projetoneki.backend.services.AuthService.LoginResult;
@@ -62,6 +63,24 @@ public class AuthController {
         return ResponseEntity.ok(result.body());
     }
 
+    //Endpoint para login no mobile, token vai no corpo da resposta
+    @PostMapping("/login/mobile")
+    @ApiOperation("Autentica o administrador (email + senha) e retorna o token no corpo, para uso em apps mobile")
+    public ResponseEntity<LoginResponseMobile> loginMobile(@Valid @RequestBody LoginRequest request) {
+
+        LoginResult result = authService.login(request);
+
+        LoginResponseMobile body = LoginResponseMobile.builder()
+                .token(result.token())
+                .type(result.body().getType())
+                .adminId(result.body().getAdminId())
+                .name(result.body().getName())
+                .email(result.body().getEmail())
+                .token(result.token())
+                .build();
+
+        return ResponseEntity.ok(body);
+    }
 
     @PostMapping("/esqueci-senha")
     public ResponseEntity<?> forgotPassword(

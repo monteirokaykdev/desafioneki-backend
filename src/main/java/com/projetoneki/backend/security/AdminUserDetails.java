@@ -8,11 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.projetoneki.backend.model.Admin;
 
-/**
- * UserDetails customizado que carrega o id do administrador autenticado.
- * Necessário para derivar o adminId a partir do token JWT em vez de confiar
- * no que o cliente manda na requisição.
- */
 public class AdminUserDetails implements UserDetails {
 
     private final Admin admin;

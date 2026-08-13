@@ -39,6 +39,7 @@ public class SecurityConfig {
     // Rotas publicas: login, logout, cadastro de admin (POST /admins) e Swagger.
     private static final String[] PUBLIC_ROUTES = {
             "/auth/login",
+            "/auth/login/mobile",
             "/auth/logout",
             "/swagger-ui/**",
             "/swagger-resources/**",
